@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samukelisiwe & Siphamandla | 25 September 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Great+Vibes&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --champagne: #F7E7CE;
+    --beige: #F5F5DC;
+    --pink-nude: #DDC0B4;
+    --dusty-rose: #DCAE96;
+    --dark-nude: #CCB3A3;
+    --espresso: #4B3832;
+    --roasted-cocoa: #6F4E37;
+    --mocha: #BEA493;
+    --meringue: #F8E0E7;
+    --light-nude: #E6DDD8;
+    --khaki: #C3B091;
+    --caffe-latte: #A67B5B;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background-color: var(--champagne);
+    color: var(--espresso);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── ORNAMENT ── */
+  .ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 1.5rem auto;
+  }
+  .ornament-line {
+    height: 1px;
+    width: 60px;
+    background: var(--mocha);
+  }
+  .ornament-diamond {
+    width: 6px;
+    height: 6px;
+    background: var(--mocha);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5rem 2rem 4rem;
+    position: relative;
+    background-color: var(--champagne);
+    border-bottom: 1px solid var(--pink-nude);
+  }
+
+  .hero-verse {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    color: var(--caffe-latte);
+    font-weight: 300;
+    max-width: 480px;
+    line-height: 1.7;
+    margin-bottom: 0.4rem;
+  }
+  .hero-verse-ref {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--mocha);
+    margin-bottom: 3.5rem;
+  }
+
+  .hero-script {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(3rem, 9vw, 5.5rem);
+    color: var(--espresso);
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+  .hero-ampersand {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    color: var(--caffe-latte);
+    display: block;
+    margin: 0.2rem 0;
+    letter-spacing: 0.08em;
+  }
+
+  .hero-date-bar {
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--roasted-cocoa);
+  }
+  .hero-date-bar span { opacity: 0.45; }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    opacity: 0.4;
+    animation: fadeUpDown 2.2s ease-in-out infinite;
+  }
+  .scroll-hint-line {
+    width: 1px;
+    height: 36px;
+    background: var(--espresso);
+  }
+  .scroll-hint-text {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--espresso);
+  }
+  @keyframes fadeUpDown {
+    0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.3; }
+    50% { transform: translateX(-50%) translateY(6px); opacity: 0.6; }
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 5rem 2rem;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--mocha);
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.9rem, 4vw, 2.6rem);
+    font-weight: 400;
+    text-align: center;
+    color: var(--espresso);
+    margin-bottom: 0.5rem;
+  }
+
+  /* ── DETAILS SECTION ── */
+  #details {
+    background: var(--champagne);
+    max-width: 100%;
+    padding: 5rem 2rem;
+    border-top: 1px solid var(--pink-nude);
+    border-bottom: 1px solid var(--pink-nude);
+  }
+  #details .inner {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .event-card {
+    background: rgba(247, 231, 206, 0.6);
+    border: 1px solid var(--pink-nude);
+    padding: 2rem 1.8rem;
+    text-align: center;
+    position: relative;
+  }
+  .event-card::before {
+    content: '';
+    position: absolute;
+    top: 6px; left: 6px; right: 6px; bottom: 6px;
+    border: 1px solid var(--light-nude);
+    pointer-events: none;
+  }
+
+  .event-icon {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .event-type {
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--mocha);
+    margin-bottom: 0.8rem;
+  }
+  .event-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--espresso);
+    margin-bottom: 1.2rem;
+    line-height: 1.3;
+  }
+  .event-detail {
+    font-size: 0.8rem;
+    color: var(--roasted-cocoa);
+    line-height: 1.8;
+  }
+  .event-detail strong {
+    display: block;
+    font-weight: 500;
+    color: var(--espresso);
+    letter-spacing: 0.06em;
+  }
+
+  /* ── RSVP ── */
+  #rsvp-section {
+    background: var(--meringue);
+    max-width: 100%;
+    padding: 5rem 2rem;
+  }
+  #rsvp-section .inner {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .rsvp-deadline {
+    text-align: center;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    color: var(--caffe-latte);
+    margin-top: 0.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.8rem;
+  }
+  .form-label {
+    display: block;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--roasted-cocoa);
+    margin-bottom: 0.6rem;
+  }
+  .form-input, .form-textarea {
+    width: 100%;
+    background: #fff9f5;
+    border: 1px solid var(--pink-nude);
+    padding: 0.85rem 1rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--espresso);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-textarea:focus {
+    border-color: var(--caffe-latte);
+  }
+  .form-textarea {
+    resize: vertical;
+    min-height: 90px;
+  }
+
+  .attend-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+  }
+  .attend-option input { display: none; }
+  .attend-option label {
+    display: block;
+    text-align: center;
+    padding: 0.85rem;
+    border: 1px solid var(--pink-nude);
+    background: #fff9f5;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--roasted-cocoa);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .attend-option input:checked + label {
+    background: var(--espresso);
+    color: var(--champagne);
+    border-color: var(--espresso);
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 1rem;
+    background: var(--espresso);
+    color: var(--champagne);
+    border: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 1rem;
+  }
+  .submit-btn:hover { background: var(--roasted-cocoa); }
+
+  .rsvp-success {
+    display: none;
+    text-align: center;
+    padding: 3rem 2rem;
+  }
+  .rsvp-success .success-script {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3rem;
+    color: var(--espresso);
+    margin-bottom: 1rem;
+  }
+  .rsvp-success p {
+    font-size: 0.9rem;
+    color: var(--caffe-latte);
+    line-height: 1.8;
+  }
+
+  /* ── GIFT REGISTRY ── */
+  #registry {
+    text-align: center;
+  }
+  .registry-placeholder {
+    border: 1px solid var(--pink-nude);
+    padding: 3rem 2rem;
+    margin-top: 2.5rem;
+    background: rgba(247, 231, 206, 0.4);
+    position: relative;
+  }
+  .registry-placeholder::before {
+    content: '';
+    position: absolute;
+    top: 7px; left: 7px; right: 7px; bottom: 7px;
+    border: 1px solid var(--light-nude);
+    pointer-events: none;
+  }
+  .registry-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--caffe-latte);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+  .registry-btn {
+    display: inline-block;
+    padding: 0.8rem 2.5rem;
+    border: 1px solid var(--espresso);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--espresso);
+    text-decoration: none;
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.2s;
+  }
+  .registry-btn:hover {
+    background: var(--espresso);
+    color: var(--champagne);
+  }
+
+  .whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+    padding: 0.85rem 2rem;
+    background: #25D366;
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 400;
+    transition: background 0.2s;
+  }
+  .whatsapp-btn:hover { background: #1ebe5d; }
+  #admin-panel {
+    display: none;
+    background: var(--espresso);
+    max-width: 100%;
+    padding: 5rem 2rem;
+  }
+  #admin-panel .inner {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+  #admin-panel .section-label { color: var(--mocha); }
+  #admin-panel .section-title { color: var(--champagne); }
+  #admin-panel .ornament-line { background: var(--mocha); }
+  #admin-panel .ornament-diamond { background: var(--mocha); }
+
+  .admin-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 2.5rem 0;
+  }
+  .stat-box {
+    background: rgba(247,231,206,0.08);
+    border: 1px solid rgba(190,164,147,0.25);
+    padding: 1.4rem;
+    text-align: center;
+  }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.6rem;
+    font-weight: 300;
+    color: var(--champagne);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .stat-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mocha);
+  }
+
+  .rsvp-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .rsvp-col-title {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mocha);
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(190,164,147,0.25);
+    margin-bottom: 0.8rem;
+  }
+  .rsvp-col-title .count-badge {
+    display: inline-block;
+    background: rgba(190,164,147,0.2);
+    color: var(--champagne);
+    font-size: 0.6rem;
+    padding: 1px 7px;
+    border-radius: 20px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .rsvp-entry {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(190,164,147,0.12);
+  }
+  .rsvp-entry:last-child { border-bottom: none; }
+  .rsvp-guest-name {
+    font-size: 0.9rem;
+    color: var(--champagne);
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+  }
+  .rsvp-guest-meta {
+    font-size: 0.72rem;
+    color: var(--mocha);
+    line-height: 1.5;
+  }
+  .rsvp-song { font-style: italic; }
+
+  .empty-state {
+    font-size: 0.8rem;
+    color: rgba(190,164,147,0.5);
+    font-style: italic;
+    padding: 1rem 0;
+  }
+
+  /* admin login */
+  #admin-login {
+    position: fixed;
+    inset: 0;
+    background: rgba(75,56,50,0.97);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .login-box {
+    background: var(--champagne);
+    padding: 3rem;
+    text-align: center;
+    max-width: 340px;
+    width: 90%;
+  }
+  .login-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    color: var(--espresso);
+    margin-bottom: 0.4rem;
+  }
+  .login-sub {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    color: var(--mocha);
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+  .login-input {
+    width: 100%;
+    border: 1px solid var(--pink-nude);
+    background: #fff9f5;
+    padding: 0.85rem 1rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.9rem;
+    color: var(--espresso);
+    outline: none;
+    margin-bottom: 1rem;
+    text-align: center;
+    letter-spacing: 0.2em;
+  }
+  .login-btn {
+    width: 100%;
+    padding: 0.85rem;
+    background: var(--espresso);
+    color: var(--champagne);
+    border: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .login-error {
+    font-size: 0.75rem;
+    color: #a03030;
+    margin-top: 0.8rem;
+    display: none;
+  }
+  .admin-trigger {
+    display: block;
+    text-align: center;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(75,56,50,0.25);
+    padding: 1rem;
+    cursor: default;
+    user-select: none;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--espresso);
+    padding: 3rem 2rem;
+    text-align: center;
+    border-top: 1px solid rgba(190,164,147,0.2);
+  }
+  .footer-script {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.2rem;
+    color: var(--champagne);
+    opacity: 0.6;
+    margin-bottom: 1rem;
+  }
+  .footer-text {
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mocha);
+    opacity: 0.6;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .events-grid { grid-template-columns: 1fr; }
+    .hero-date-bar { flex-direction: column; gap: 0.5rem; }
+    .hero-date-bar span { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section id="hero">
+  <p class="hero-verse">"I have found the one whom my soul loves."</p>
+  <p class="hero-verse-ref">— Song of Solomon 3:4</p>
+
+  <div class="ornament">
+    <div class="ornament-line"></div>
+    <div class="ornament-diamond"></div>
+    <div class="ornament-line"></div>
+  </div>
+
+  <div class="hero-script">Samukelisiwe</div>
+  <span class="hero-ampersand">& </span>
+  <div class="hero-script">Siphamandla</div>
+
+  <div class="hero-date-bar">
+    <div>25 September 2026</div>
+    <span>·</span>
+    <div>Durban, KwaZulu-Natal</div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-hint-line"></div>
+    <div class="scroll-hint-text">Scroll</div>
+  </div>
+</section>
+
+<!-- DETAILS -->
+<div id="details">
+  <div class="inner">
+    <p class="section-label">The Celebration</p>
+    <h2 class="section-title">Save the Date</h2>
+
+    <div class="ornament">
+      <div class="ornament-line"></div>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-line"></div>
+    </div>
+
+    <div class="events-grid">
+
+      <div class="event-card">
+        <span class="event-icon">✦</span>
+        <p class="event-type">Ceremony</p>
+        <p class="event-name">Japanese Garden<br>Durban North</p>
+        <div class="event-detail">
+          <strong>09:00 AM</strong>
+          6 Prospect Hall Rd<br>Prospect Hall
+        </div>
+      </div>
+
+      <div class="event-card">
+        <span class="event-icon">✦</span>
+        <p class="event-type">Reception</p>
+        <p class="event-name">Epic Functions &<br>Conference Centre</p>
+        <div class="event-detail">
+          <strong>12:00 PM</strong>
+          21 Chartwell Centre<br>15 Chartwell Drive, Umhlanga
+        </div>
+      </div>
+
+      <div class="event-card">
+        <span class="event-icon">✦</span>
+        <p class="event-type">After Celebration</p>
+        <p class="event-name">Groom's<br>Residence</p>
+        <div class="event-detail">
+          <strong>To follow</strong>
+          675 Jackal Road<br>Waterloo, 3419
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- RSVP -->
+<div id="rsvp-section">
+  <div class="inner">
+    <p class="section-label">Kindly Respond</p>
+    <h2 class="section-title">RSVP</h2>
+
+    <div class="ornament">
+      <div class="ornament-line"></div>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-line"></div>
+    </div>
+
+    <p class="rsvp-deadline">Please RSVP by 31 July 2026</p>
+
+    <div id="rsvp-form">
+      <div class="form-group">
+        <label class="form-label" for="guest-name">Full Name</label>
+        <input class="form-input" type="text" id="guest-name" placeholder="Your full name" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Will you be joining us?</label>
+        <div class="attend-options">
+          <div class="attend-option">
+            <input type="radio" name="attendance" id="att-yes" value="yes" />
+            <label for="att-yes">Joyfully Accepts</label>
+          </div>
+          <div class="attend-option">
+            <input type="radio" name="attendance" id="att-no" value="no" />
+            <label for="att-no">Regretfully Declines</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="song-req">Song Request</label>
+        <input class="form-input" type="text" id="song-req" placeholder="A song you'd love to dance to" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="message">Message to the Couple</label>
+        <textarea class="form-textarea" id="message" placeholder="Share your wishes with Samukelisiwe & Siphamandla…"></textarea>
+      </div>
+
+      <button class="submit-btn" onclick="submitRSVP()">Send My RSVP</button>
+    </div>
+
+    <div class="rsvp-success" id="rsvp-success">
+      <div class="success-script">Thank you</div>
+      <p>Your RSVP has been received.<br>We can't wait to celebrate with you.</p>
+      <a class="whatsapp-btn" href="https://wa.me/27712958827" target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle;margin-right:8px;flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.554 4.103 1.523 5.824L.057 23.5a.5.5 0 0 0 .609.61l5.857-1.533A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.367l-.36-.214-3.72.975.993-3.62-.234-.373A9.818 9.818 0 1 1 12 21.818z"/></svg>
+        Message the Couple on WhatsApp
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<!-- GIFT REGISTRY -->
+<section id="registry">
+  <p class="section-label">Gift Registry</p>
+  <h2 class="section-title">Celebrate With a Gift</h2>
+
+  <div class="ornament">
+    <div class="ornament-line"></div>
+    <div class="ornament-diamond"></div>
+    <div class="ornament-line"></div>
+  </div>
+
+  <div class="registry-placeholder">
+    <p class="registry-text">
+      Your presence at our celebration is the greatest gift of all.<br>
+      For those who wish to honour us with a gift,<br>
+      our registry is available below.
+    </p>
+    <a href="#" class="registry-btn" id="download-registry" onclick="alert('Gift registry will be available here soon.'); return false;">
+      View Gift Registry
+    </a>
+  </div>
+</section>
+
+<!-- ADMIN LOGIN OVERLAY -->
+<div id="admin-login">
+  <div class="login-box">
+    <p class="login-title">Admin Access</p>
+    <p class="login-sub">RSVP Dashboard</p>
+    <input class="login-input" type="password" id="admin-pw" placeholder="••••••••" onkeydown="if(event.key==='Enter') checkLogin()" />
+    <button class="login-btn" onclick="checkLogin()">Enter</button>
+    <p class="login-error" id="login-error">Incorrect password</p>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin-panel">
+  <div class="inner">
+    <p class="section-label">Admin Dashboard</p>
+    <h2 class="section-title" style="color:var(--champagne)">RSVP Overview</h2>
+
+    <div class="ornament">
+      <div class="ornament-line"></div>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-line"></div>
+    </div>
+
+    <div class="admin-stats">
+      <div class="stat-box">
+        <span class="stat-number" id="stat-total">0</span>
+        <span class="stat-label">Total Responses</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-number" id="stat-yes">0</span>
+        <span class="stat-label">Attending</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-number" id="stat-no">0</span>
+        <span class="stat-label">Not Attending</span>
+      </div>
+    </div>
+
+    <div class="rsvp-columns">
+      <div>
+        <p class="rsvp-col-title">Attending <span class="count-badge" id="badge-yes">0</span></p>
+        <div id="list-attending"><p class="empty-state">No responses yet</p></div>
+      </div>
+      <div>
+        <p class="rsvp-col-title">Not Attending <span class="count-badge" id="badge-no">0</span></p>
+        <div id="list-not-attending"><p class="empty-state">No responses yet</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-script">Samukelisiwe & Siphamandla</div>
+  <p class="footer-text">25 · 09 · 2026 &nbsp;·&nbsp; Durban, KwaZulu-Natal</p>
+  <span class="admin-trigger" id="admin-trigger" onclick="openAdminLogin()" title="">⠀</span>
+</footer>
+
+<script>
+  const SUPABASE_URL = 'https://fhzjhlyrepjjgrkkvxds.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZoempobHlyZXBqamdya2t2eGRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxODUyMDEsImV4cCI6MjA5Mjc2MTIwMX0.-J32EMOlrln4-YKZnyFhADc_tVvIKm9ADnLFOac28us';
+  const ADMIN_PASSWORD = 'sam-sipho-2026';
+
+  const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  async function submitRSVP() {
+    const name = document.getElementById('guest-name').value.trim();
+    const attendance = document.querySelector('input[name="attendance"]:checked');
+    const song = document.getElementById('song-req').value.trim();
+    const message = document.getElementById('message').value.trim();
+
+    if (!name) { alert('Please enter your name.'); return; }
+    if (!attendance) { alert('Please let us know if you can make it.'); return; }
+
+    const btn = document.querySelector('.submit-btn');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+
+    const { error } = await db.from('rsvps').insert({
+      name,
+      attendance: attendance.value,
+      song: song || null,
+      message: message || null
+    });
+
+    if (error) {
+      console.error(error);
+      btn.textContent = 'Send My RSVP';
+      btn.disabled = false;
+      alert('Something went wrong. Please try again.');
+      return;
+    }
+
+    document.getElementById('rsvp-form').style.display = 'none';
+    document.getElementById('rsvp-success').style.display = 'block';
+  }
+
+  function openAdminLogin() {
+    document.getElementById('admin-login').style.display = 'flex';
+    setTimeout(() => document.getElementById('admin-pw').focus(), 100);
+  }
+
+  function checkLogin() {
+    const pw = document.getElementById('admin-pw').value;
+    if (pw === ADMIN_PASSWORD) {
+      document.getElementById('admin-login').style.display = 'none';
+      document.getElementById('admin-pw').value = '';
+      document.getElementById('login-error').style.display = 'none';
+      showAdminPanel();
+    } else {
+      document.getElementById('login-error').style.display = 'block';
+    }
+  }
+
+  async function showAdminPanel() {
+    document.getElementById('admin-panel').style.display = 'block';
+    document.getElementById('admin-panel').scrollIntoView({ behavior: 'smooth' });
+
+    const { data: rsvps, error } = await db
+      .from('rsvps')
+      .select('*')
+      .order('created_at', { ascending: true });
+
+    if (error || !rsvps) {
+      console.error(error);
+      return;
+    }
+
+    const attending = rsvps.filter(r => r.attendance === 'yes');
+    const notAttending = rsvps.filter(r => r.attendance === 'no');
+
+    document.getElementById('stat-total').textContent = rsvps.length;
+    document.getElementById('stat-yes').textContent = attending.length;
+    document.getElementById('stat-no').textContent = notAttending.length;
+    document.getElementById('badge-yes').textContent = attending.length;
+    document.getElementById('badge-no').textContent = notAttending.length;
+
+    function renderList(entries, containerId) {
+      const el = document.getElementById(containerId);
+      if (!entries.length) { el.innerHTML = '<p class="empty-state">None yet</p>'; return; }
+      el.innerHTML = entries.map(e => `
+        <div class="rsvp-entry">
+          <div class="rsvp-guest-name">${e.name}</div>
+          <div class="rsvp-guest-meta">
+            ${e.song ? `<span class="rsvp-song">♪ ${e.song}</span><br>` : ''}
+            ${e.message ? `"${e.message}"` : ''}
+          </div>
+        </div>`).join('');
+    }
+
+    renderList(attending, 'list-attending');
+    renderList(notAttending, 'list-not-attending');
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') document.getElementById('admin-login').style.display = 'none';
+  });
+</script>
+</body>
+</html>
