@@ -350,7 +350,7 @@
     line-height: 1.8;
   }
 
-  /* ── GIFT REGISTRY ── */
+  /* ── VOUCHERS ── */
   #registry {
     text-align: center;
   }
@@ -606,9 +606,124 @@
     .hero-date-bar { flex-direction: column; gap: 0.5rem; }
     .hero-date-bar span { display: none; }
   }
+
+  /* ── PREMIUM EXTRAS ── */
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.18;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(255,255,255,0.35) 0 1px, transparent 1px),
+      radial-gradient(circle at 80% 80%, rgba(75,56,50,0.12) 0 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .mini-nav {
+    position: fixed;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 900;
+    display: flex;
+    gap: 1.2rem;
+    padding: 0.75rem 1.4rem;
+    background: rgba(247, 231, 206, 0.82);
+    border: 1px solid rgba(220, 174, 150, 0.5);
+    backdrop-filter: blur(14px);
+  }
+
+  .mini-nav a {
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--espresso);
+    text-decoration: none;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .countdown-box {
+    margin-top: 2.4rem;
+    padding: 1.2rem 2rem;
+    border: 1px solid var(--pink-nude);
+    background: rgba(255, 249, 245, 0.45);
+  }
+
+  .countdown-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    color: var(--espresso);
+    line-height: 1;
+  }
+
+  .countdown-text {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--caffe-latte);
+    margin-top: 0.4rem;
+  }
+
+  .event-actions {
+    margin-top: 1.3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .event-link {
+    display: inline-block;
+    padding: 0.65rem 1rem;
+    border: 1px solid var(--pink-nude);
+    color: var(--espresso);
+    text-decoration: none;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+
+  .event-link:hover {
+    background: var(--espresso);
+    color: var(--champagne);
+    border-color: var(--espresso);
+  }
+
+  @media (max-width: 600px) {
+    .mini-nav {
+      top: 10px;
+      width: calc(100% - 28px);
+      justify-content: center;
+      gap: 0.8rem;
+      padding: 0.7rem 0.8rem;
+    }
+
+    .mini-nav a {
+      font-size: 0.55rem;
+    }
+  }
 </style>
 </head>
 <body>
+
+<nav class="mini-nav">
+  <a href="#details">Details</a>
+  <a href="#rsvp-section">RSVP</a>
+  <a href="#registry">Vouchers</a>
+</nav>
 
 <!-- HERO -->
 <section id="hero">
@@ -621,14 +736,19 @@
     <div class="ornament-line"></div>
   </div>
 
-  <div class="hero-script">Samukelisiwe</div>
-  <span class="hero-ampersand">& </span>
   <div class="hero-script">Siphamandla</div>
+  <span class="hero-ampersand">& </span>
+  <div class="hero-script">Samukelisiwe</div>
 
   <div class="hero-date-bar">
     <div>25 September 2026</div>
     <span>·</span>
     <div>Durban, KwaZulu-Natal</div>
+  </div>
+
+  <div class="countdown-box">
+    <div class="countdown-number" id="countdown-days">---</div>
+    <div class="countdown-text">days until we say I do</div>
   </div>
 
   <div class="scroll-hint">
@@ -659,6 +779,10 @@
           <strong>09:00 AM</strong>
           6 Prospect Hall Rd<br>Prospect Hall
         </div>
+        <div class="event-actions">
+          <a class="event-link" href="https://www.google.com/maps/search/?api=1&query=Japanese+Garden+Durban+North" target="_blank">Open in Maps</a>
+          <a class="event-link" href="#" onclick="downloadCalendar('ceremony'); return false;">Add to Calendar</a>
+        </div>
       </div>
 
       <div class="event-card">
@@ -669,6 +793,10 @@
           <strong>12:00 PM</strong>
           21 Chartwell Centre<br>15 Chartwell Drive, Umhlanga
         </div>
+        <div class="event-actions">
+          <a class="event-link" href="https://www.google.com/maps/search/?api=1&query=Epic+Functions+and+Conference+Centre+Umhlanga" target="_blank">Open in Maps</a>
+          <a class="event-link" href="#" onclick="downloadCalendar('reception'); return false;">Add to Calendar</a>
+        </div>
       </div>
 
       <div class="event-card">
@@ -678,6 +806,9 @@
         <div class="event-detail">
           <strong>To follow</strong>
           675 Jackal Road<br>Waterloo, 3419
+        </div>
+        <div class="event-actions">
+          <a class="event-link" href="https://www.google.com/maps/search/?api=1&query=675+Jackal+Road+Waterloo+3419" target="_blank">Open in Maps</a>
         </div>
       </div>
 
@@ -720,13 +851,32 @@
       </div>
 
       <div class="form-group">
+        <label class="form-label">Will you be bringing a plus one?</label>
+        <div class="attend-options">
+          <div class="attend-option">
+            <input type="radio" name="plus_one" id="plus-yes" value="yes" onclick="togglePlusOne(true)" />
+            <label for="plus-yes">Yes</label>
+          </div>
+          <div class="attend-option">
+            <input type="radio" name="plus_one" id="plus-no" value="no" onclick="togglePlusOne(false)" />
+            <label for="plus-no">No</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group" id="plus-one-name-group" style="display:none;">
+        <label class="form-label" for="plus-one-name">Plus One Name</label>
+        <input class="form-input" type="text" id="plus-one-name" placeholder="Their full name" />
+      </div>
+
+      <div class="form-group">
         <label class="form-label" for="song-req">Song Request</label>
         <input class="form-input" type="text" id="song-req" placeholder="A song you'd love to dance to" />
       </div>
 
       <div class="form-group">
         <label class="form-label" for="message">Message to the Couple</label>
-        <textarea class="form-textarea" id="message" placeholder="Share your wishes with Samukelisiwe & Siphamandla…"></textarea>
+        <textarea class="form-textarea" id="message" placeholder="Share your wishes with Siphamandla & Samukelisiwe…"></textarea>
       </div>
 
       <button class="submit-btn" onclick="submitRSVP()">Send My RSVP</button>
@@ -744,10 +894,10 @@
   </div>
 </div>
 
-<!-- GIFT REGISTRY -->
+<!-- VOUCHERS -->
 <section id="registry">
-  <p class="section-label">Gift Registry</p>
-  <h2 class="section-title">Celebrate With a Gift</h2>
+  <p class="section-label">Gift Vouchers</p>
+  <h2 class="section-title">Celebrate With a Voucher</h2>
 
   <div class="ornament">
     <div class="ornament-line"></div>
@@ -759,10 +909,11 @@
     <p class="registry-text">
       Your presence at our celebration is the greatest gift of all.<br>
       For those who wish to honour us with a gift,<br>
-      our registry is available below.
+      voucher options from selected stores will be shared here soon.
     </p>
-    <a href="#" class="registry-btn" id="download-registry" onclick="alert('Gift registry will be available here soon.'); return false;">
-      View Gift Registry
+
+    <a href="#" class="registry-btn" onclick="alert('Voucher shop options will be available here soon.'); return false;">
+      View Voucher Options
     </a>
   </div>
 </section>
@@ -832,14 +983,114 @@
 
   const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+  function togglePlusOne(show) {
+    document.getElementById('plus-one-name-group').style.display = show ? 'block' : 'none';
+
+    if (!show) {
+      document.getElementById('plus-one-name').value = '';
+    }
+  }
+
+  function updateCountdown() {
+    const weddingDate = new Date('2026-09-25T09:00:00+02:00');
+    const today = new Date();
+    const diff = weddingDate - today;
+    const days = Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
+
+    document.getElementById('countdown-days').textContent = days;
+  }
+
+  function downloadCalendar(type) {
+    const events = {
+      ceremony: {
+        title: 'Wedding Ceremony: Siphamandla & Samukelisiwe',
+        start: '20260925T070000Z',
+        end: '20260925T090000Z',
+        location: 'Japanese Garden, Durban North, 6 Prospect Hall Rd, Prospect Hall',
+        description: 'Wedding ceremony for Siphamandla and Samukelisiwe.'
+      },
+      reception: {
+        title: 'Wedding Reception: Siphamandla & Samukelisiwe',
+        start: '20260925T100000Z',
+        end: '20260925T140000Z',
+        location: 'Epic Functions & Conference Centre, 21 Chartwell Centre, 15 Chartwell Drive, Umhlanga',
+        description: 'Wedding reception for Siphamandla and Samukelisiwe.'
+      }
+    };
+
+    const event = events[type];
+
+    const icsContent = `
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Wedding RSVP//EN
+BEGIN:VEVENT
+UID:${type}-siphamandla-samukelisiwe-2026
+DTSTAMP:20260605T120000Z
+DTSTART:${event.start}
+DTEND:${event.end}
+SUMMARY:${event.title}
+LOCATION:${event.location}
+DESCRIPTION:${event.description}
+END:VEVENT
+END:VCALENDAR
+`.trim();
+
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${type}-siphamandla-samukelisiwe.ics`;
+    link.click();
+  }
+
+  function initRevealAnimations() {
+    const revealEls = document.querySelectorAll('section, #details, #rsvp-section, #registry, .event-card');
+
+    revealEls.forEach(el => el.classList.add('reveal'));
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    revealEls.forEach(el => observer.observe(el));
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    updateCountdown();
+    initRevealAnimations();
+  });
+
   async function submitRSVP() {
     const name = document.getElementById('guest-name').value.trim();
     const attendance = document.querySelector('input[name="attendance"]:checked');
+    const plusOne = document.querySelector('input[name="plus_one"]:checked');
+    const plusOneName = document.getElementById('plus-one-name').value.trim();
     const song = document.getElementById('song-req').value.trim();
     const message = document.getElementById('message').value.trim();
 
-    if (!name) { alert('Please enter your name.'); return; }
-    if (!attendance) { alert('Please let us know if you can make it.'); return; }
+    if (!name) {
+      alert('Please enter your name.');
+      return;
+    }
+
+    if (!attendance) {
+      alert('Please let us know if you can make it.');
+      return;
+    }
+
+    if (!plusOne) {
+      alert('Please let us know if you are bringing a plus one.');
+      return;
+    }
+
+    if (plusOne.value === 'yes' && !plusOneName) {
+      alert('Please enter your plus one’s name.');
+      return;
+    }
 
     const btn = document.querySelector('.submit-btn');
     btn.textContent = 'Sending…';
@@ -848,6 +1099,8 @@
     const { error } = await db.from('rsvps').insert({
       name,
       attendance: attendance.value,
+      plus_one: plusOne.value,
+      plus_one_name: plusOneName || null,
       song: song || null,
       message: message || null
     });
@@ -871,6 +1124,7 @@
 
   function checkLogin() {
     const pw = document.getElementById('admin-pw').value;
+
     if (pw === ADMIN_PASSWORD) {
       document.getElementById('admin-login').style.display = 'none';
       document.getElementById('admin-pw').value = '';
@@ -906,15 +1160,22 @@
 
     function renderList(entries, containerId) {
       const el = document.getElementById(containerId);
-      if (!entries.length) { el.innerHTML = '<p class="empty-state">None yet</p>'; return; }
+
+      if (!entries.length) {
+        el.innerHTML = '<p class="empty-state">None yet</p>';
+        return;
+      }
+
       el.innerHTML = entries.map(e => `
         <div class="rsvp-entry">
           <div class="rsvp-guest-name">${e.name}</div>
           <div class="rsvp-guest-meta">
+            ${e.plus_one === 'yes' ? `Plus one: ${e.plus_one_name || 'Name not provided'}<br>` : ''}
             ${e.song ? `<span class="rsvp-song">♪ ${e.song}</span><br>` : ''}
             ${e.message ? `"${e.message}"` : ''}
           </div>
-        </div>`).join('');
+        </div>
+      `).join('');
     }
 
     renderList(attending, 'list-attending');
@@ -922,7 +1183,9 @@
   }
 
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') document.getElementById('admin-login').style.display = 'none';
+    if (e.key === 'Escape') {
+      document.getElementById('admin-login').style.display = 'none';
+    }
   });
 </script>
 </body>
