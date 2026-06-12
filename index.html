@@ -134,6 +134,7 @@
     display: block;
     margin: 0.2rem 0;
     letter-spacing: 0.08em;
+    text-shadow: 0 0 18px rgba(255,255,255,0.35);
   }
 
   .hero-date-bar {
@@ -146,36 +147,9 @@
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--roasted-cocoa);
+    text-shadow: 0 0 18px rgba(255,255,255,0.32);
   }
   .hero-date-bar span { opacity: 0.45; }
-
-  .scroll-hint {
-    position: absolute;
-    bottom: 2.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    opacity: 0.4;
-    animation: fadeUpDown 2.2s ease-in-out infinite;
-  }
-  .scroll-hint-line {
-    width: 1px;
-    height: 36px;
-    background: var(--espresso);
-  }
-  .scroll-hint-text {
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--espresso);
-  }
-  @keyframes fadeUpDown {
-    0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.3; }
-    50% { transform: translateX(-50%) translateY(6px); opacity: 0.6; }
-  }
 
   @keyframes floatText {
     0%,100% {
@@ -201,6 +175,7 @@
     color: var(--mocha);
     text-align: center;
     margin-bottom: 2.5rem;
+    text-shadow: 0 0 16px rgba(255,255,255,0.28);
   }
 
   .section-title {
@@ -210,6 +185,7 @@
     text-align: center;
     color: var(--espresso);
     margin-bottom: 0.5rem;
+    text-shadow: 0 0 20px rgba(255,255,255,0.38);
   }
 
   /* ── DETAILS SECTION ── */
@@ -556,15 +532,30 @@
     justify-content: center;
   }
   .login-box {
+    position: relative;
     text-align: center;
     max-width: 340px;
     width: 90%;
+  }
+  .login-close {
+    position: absolute;
+    top: 0.85rem;
+    right: 0.85rem;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.12);
+    color: var(--espresso);
+    cursor: pointer;
+    font-size: 1.2rem;
+    line-height: 1;
   }
   .login-title {
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.5rem;
     color: var(--espresso);
     margin-bottom: 0.4rem;
+    text-shadow: 0 0 18px rgba(255,255,255,0.42);
   }
   .login-sub {
     font-size: 0.72rem;
@@ -572,6 +563,7 @@
     color: var(--mocha);
     margin-bottom: 2rem;
     text-transform: uppercase;
+    text-shadow: 0 0 14px rgba(255,255,255,0.36);
   }
   .login-input {
     width: 100%;
@@ -814,10 +806,6 @@
     <source src="our-song.mp3" type="audio/mpeg">
   </audio>
 
-  <div class="scroll-hint">
-    <div class="scroll-hint-line"></div>
-    <div class="scroll-hint-text">Scroll</div>
-  </div>
 </section>
 
 <!-- DETAILS -->
@@ -1016,6 +1004,7 @@
 <!-- ADMIN LOGIN OVERLAY -->
 <div id="admin-login">
   <div class="login-box">
+    <button class="login-close" type="button" onclick="closeAdminLogin()" aria-label="Close admin access">&times;</button>
     <p class="login-title">Admin Access</p>
     <p class="login-sub">RSVP Dashboard</p>
     <input class="login-input" type="password" id="admin-pw" placeholder="••••••••" onkeydown="if(event.key==='Enter') checkLogin()" />
@@ -1230,13 +1219,17 @@ END:VCALENDAR
     setTimeout(() => document.getElementById('admin-pw').focus(), 100);
   }
 
+  function closeAdminLogin() {
+    document.getElementById('admin-login').style.display = 'none';
+    document.getElementById('admin-pw').value = '';
+    document.getElementById('login-error').style.display = 'none';
+  }
+
   function checkLogin() {
     const pw = document.getElementById('admin-pw').value;
 
     if (pw === ADMIN_PASSWORD) {
-      document.getElementById('admin-login').style.display = 'none';
-      document.getElementById('admin-pw').value = '';
-      document.getElementById('login-error').style.display = 'none';
+      closeAdminLogin();
       showAdminPanel();
     } else {
       document.getElementById('login-error').style.display = 'block';
@@ -1292,7 +1285,7 @@ END:VCALENDAR
 
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
-      document.getElementById('admin-login').style.display = 'none';
+      closeAdminLogin();
     }
   });
 </script>
