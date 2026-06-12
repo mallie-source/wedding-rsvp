@@ -924,23 +924,51 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label">Will you be bringing a plus one?</label>
-        <div class="attend-options">
-          <div class="attend-option">
-            <input type="radio" name="plus_one" id="plus-yes" value="yes" onclick="togglePlusOne(true)" />
-            <label for="plus-yes">Yes</label>
-          </div>
-          <div class="attend-option">
-            <input type="radio" name="plus_one" id="plus-no" value="no" onclick="togglePlusOne(false)" />
-            <label for="plus-no">No</label>
+      <div id="plus-one-section">
+        <div class="form-group">
+          <label class="form-label">Will you be bringing a plus one?</label>
+
+          <div class="attend-options">
+            <div class="attend-option">
+              <input
+                type="radio"
+                name="plus_one"
+                id="plus-yes"
+                value="yes"
+                onclick="togglePlusOne(true)"
+              />
+              <label for="plus-yes">Yes</label>
+            </div>
+
+            <div class="attend-option">
+              <input
+                type="radio"
+                name="plus_one"
+                id="plus-no"
+                value="no"
+                onclick="togglePlusOne(false)"
+              />
+              <label for="plus-no">No</label>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="form-group" id="plus-one-name-group" style="display:none;">
-        <label class="form-label" for="plus-one-name">Plus One Name</label>
-        <input class="form-input" type="text" id="plus-one-name" placeholder="Their full name" />
+        <div
+          class="form-group"
+          id="plus-one-name-group"
+          style="display:none;"
+        >
+          <label class="form-label" for="plus-one-name">
+            Plus One Name
+          </label>
+
+          <input
+            class="form-input"
+            type="text"
+            id="plus-one-name"
+            placeholder="Their full name"
+          />
+        </div>
       </div>
 
       <div class="form-group">
@@ -1066,6 +1094,16 @@
   const ADMIN_PASSWORD = 'sam-sipho-2026';
 
   const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const currentPath = window.location.pathname;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const plusOneSection =
+      document.getElementById('plus-one-section');
+
+    if (currentPath === '/single') {
+      plusOneSection.style.display = 'none';
+    }
+  });
 
   function togglePlusOne(show) {
     document.getElementById('plus-one-name-group').style.display = show ? 'block' : 'none';
@@ -1164,8 +1202,8 @@ END:VCALENDAR
   async function submitRSVP() {
     const name = document.getElementById('guest-name').value.trim();
     const attendance = document.querySelector('input[name="attendance"]:checked');
-    const plusOne = document.querySelector('input[name="plus_one"]:checked');
-    const plusOneName = document.getElementById('plus-one-name').value.trim();
+    let plusOneValue = 'not_allowed';
+    let plusOneName = null;
     const song = document.getElementById('song-req').value.trim();
     const message = document.getElementById('message').value.trim();
 
@@ -1179,12 +1217,25 @@ END:VCALENDAR
       return;
     }
 
-    if (!plusOne) {
-      alert('Please let us know if you are bringing a plus one.');
-      return;
+    if (window.location.pathname !== '/single') {
+      const plusOne =
+        document.querySelector('input[name="plus_one"]:checked');
+
+      if (!plusOne) {
+        alert(
+          'Please let us know if you are bringing a plus one.'
+        );
+
+        return;
+      }
+
+      plusOneValue = plusOne.value;
+
+      plusOneName =
+        document.getElementById('plus-one-name').value.trim();
     }
 
-    if (plusOne.value === 'yes' && !plusOneName) {
+    if (plusOneValue === 'yes' && !plusOneName) {
       alert('Please enter your plus one’s name.');
       return;
     }
@@ -1196,8 +1247,10 @@ END:VCALENDAR
     const { error } = await db.from('rsvps').insert({
       name,
       attendance: attendance.value,
-      plus_one: plusOne.value,
+
+      plus_one: plusOneValue,
       plus_one_name: plusOneName || null,
+
       song: song || null,
       message: message || null
     });
